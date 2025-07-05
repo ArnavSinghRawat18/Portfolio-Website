@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FaGithub, FaLinkedin, FaTwitter, FaArrowDown } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaTwitter, FaInstagram, FaWhatsapp, FaArrowDown } from 'react-icons/fa';
 import './Home.css';
 
 const Home = () => {
@@ -8,6 +8,7 @@ const Home = () => {
   const [weather, setWeather] = useState(null);
   const [weatherLocation, setWeatherLocation] = useState('Unknown Location');
   const [locationError, setLocationError] = useState(null);
+  const [showLocationAlert, setShowLocationAlert] = useState(false);
   const [quote, setQuote] = useState(null);
   const [typewriterText, setTypewriterText] = useState('');
   
@@ -24,36 +25,37 @@ const Home = () => {
     return () => clearInterval(timer);
   }, []);
 
+  // Function to fetch weather by coordinates
+  const fetchWeatherByLocation = async (latitude, longitude) => {
+    try {
+      // Fetch weather data
+      const weatherResponse = await fetch(
+        `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&temperature_unit=celsius`
+      );
+      const weatherData = await weatherResponse.json();
+      setWeather(weatherData.current_weather);
+
+      // Fetch location name using reverse geocoding
+      try {
+        const locationResponse = await fetch(
+          `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
+        );
+        const locationData = await locationResponse.json();
+        const city = locationData.city || locationData.locality || 'Unknown City';
+        const country = locationData.countryName || 'Unknown Country';
+        setWeatherLocation(`${city}, ${country}`);
+      } catch (locationErr) {
+        console.error('Location name fetch failed:', locationErr);
+        setWeatherLocation(`${latitude.toFixed(2)}, ${longitude.toFixed(2)}`);
+      }
+    } catch (error) {
+      console.error('Weather fetch failed:', error);
+      setLocationError('Unable to fetch weather data');
+    }
+  };
+
   // Weather API with User Location
   useEffect(() => {
-    const fetchWeatherByLocation = async (latitude, longitude) => {
-      try {
-        // Fetch weather data
-        const weatherResponse = await fetch(
-          `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&temperature_unit=celsius`
-        );
-        const weatherData = await weatherResponse.json();
-        setWeather(weatherData.current_weather);
-
-        // Fetch location name using reverse geocoding
-        try {
-          const locationResponse = await fetch(
-            `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
-          );
-          const locationData = await locationResponse.json();
-          const city = locationData.city || locationData.locality || 'Unknown City';
-          const country = locationData.countryName || 'Unknown Country';
-          setWeatherLocation(`${city}, ${country}`);
-        } catch (locationErr) {
-          console.error('Location name fetch failed:', locationErr);
-          setWeatherLocation(`${latitude.toFixed(2)}, ${longitude.toFixed(2)}`);
-        }
-      } catch (error) {
-        console.error('Weather fetch failed:', error);
-        setLocationError('Unable to fetch weather data');
-      }
-    };
-
     const fetchWeather = () => {
       if ('geolocation' in navigator) {
         navigator.geolocation.getCurrentPosition(
@@ -64,6 +66,7 @@ const Home = () => {
           (error) => {
             console.error('Geolocation error:', error);
             setLocationError('Location access denied');
+            setShowLocationAlert(true);
             // Fallback to default location (NYC)
             fetchWeatherByLocation(40.7128, -74.0060);
             setWeatherLocation('New York City, USA (Default)');
@@ -77,6 +80,7 @@ const Home = () => {
       } else {
         console.error('Geolocation not supported');
         setLocationError('Geolocation not supported');
+        setShowLocationAlert(true);
         // Fallback to default location
         fetchWeatherByLocation(40.7128, -74.0060);
         setWeatherLocation('New York City, USA (Default)');
@@ -85,6 +89,29 @@ const Home = () => {
 
     fetchWeather();
   }, []);
+
+  // Function to handle location permission request
+  const handleAllowLocation = () => {
+    setShowLocationAlert(false);
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setLocationError(null);
+          fetchWeatherByLocation(latitude, longitude);
+        },
+        (error) => {
+          console.error('Geolocation error:', error);
+          // Keep using default location but hide alert
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 300000
+        }
+      );
+    }
+  };
 
   // Quote API
   useEffect(() => {
@@ -144,9 +171,11 @@ const Home = () => {
   };
 
   const socialLinks = [
-    { icon: <FaGithub />, url: 'https://github.com/arnavsinghrawat', label: 'GitHub' },
-    { icon: <FaLinkedin />, url: 'https://linkedin.com/in/arnavsinghrawat', label: 'LinkedIn' },
-    { icon: <FaTwitter />, url: 'https://twitter.com/arnavsinghrawat', label: 'Twitter' }
+    { icon: <FaGithub />, url: 'https://github.com/ArnavSinghRawat18', label: 'GitHub' },
+    { icon: <FaLinkedin />, url: 'https://www.linkedin.com/in/arnav-singh-rawat-993725275/', label: 'LinkedIn' },
+    { icon: <FaTwitter />, url: 'https://x.com/ArnavSinghRawa1', label: 'Twitter' },
+    { icon: <FaInstagram />, url: 'https://www.instagram.com/a.r.n.a.v_s.i.n.g.h_r.a.w.a.t/', label: 'Instagram' },
+    { icon: <FaWhatsapp />, url: 'https://wa.me/919343612820', label: 'WhatsApp' }
   ];
 
   return (
@@ -160,6 +189,27 @@ const Home = () => {
         <div className="gradient-orb orb-1"></div>
         <div className="gradient-orb orb-2"></div>
       </div>
+
+      {/* Location Permission Alert */}
+      {showLocationAlert && (
+        <div className="location-alert">
+          <div className="location-alert-content">
+            <div className="alert-icon">📍</div>
+            <div className="alert-text">
+              <h3>Enable Location Access</h3>
+              <p>To use full features of the website including live weather updates, please allow location access.</p>
+            </div>
+            <div className="alert-actions">
+              <button className="btn btn-primary btn-small" onClick={handleAllowLocation}>
+                Allow Location
+              </button>
+              <button className="btn btn-secondary btn-small" onClick={() => setShowLocationAlert(false)}>
+                Maybe Later
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="container">
         <div className="home-content">

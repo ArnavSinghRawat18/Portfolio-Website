@@ -7,89 +7,125 @@ const Resume = () => {
     // Create a link element and trigger download
     const link = document.createElement('a');
     link.href = '/resume.pdf'; // PDF should be in public folder
-    link.download = 'John_Doe_Resume.pdf';
+    link.download = 'Arnav_Singh_Rawat_Resume.pdf';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   };
 
-  const experience = [
+  const projects = [
     {
-      title: 'Senior Frontend Developer',
-      company: 'Tech Solutions Inc.',
-      period: '2023 - Present',
-      location: 'New York, NY',
+      title: '2048 Game',
+      tech: 'HTML, CSS, JavaScript',
+      period: '2024',
+      links: {
+        source: '#',
+        live: '#'
+      },
       description: [
-        'Lead frontend development team of 5 developers',
-        'Architected and implemented scalable React applications',
-        'Improved application performance by 40% through optimization',
-        'Mentored junior developers and conducted code reviews'
+        'Developed a fully responsive and interactive clone of the classic 2048 game, playable on both desktop and mobile devices',
+        'Implemented core game mechanics such as dynamic tile merging, score tracking, and random tile generation using JavaScript',
+        'Added touch gesture support for mobile users, enhancing accessibility and user experience',
+        'Designed an intuitive UI/UX with dark/light mode toggle, engaging tile animations, and visual feedback using CSS transitions',
+        'Applied modular code practices and event-driven programming to manage gameplay logic and interface updates'
       ]
     },
     {
-      title: 'Frontend Developer',
-      company: 'StartupCo',
-      period: '2022 - 2023',
-      location: 'Remote',
+      title: 'Responsive News Website',
+      tech: 'HTML, CSS, JavaScript',
+      period: '2024',
+      links: {
+        source: '#',
+        live: '#'
+      },
       description: [
-        'Developed responsive web applications using React and TypeScript',
-        'Collaborated with design team to implement pixel-perfect UI',
-        'Integrated RESTful APIs and managed application state',
-        'Implemented automated testing with Jest and React Testing Library'
-      ]
-    },
-    {
-      title: 'Junior Web Developer',
-      company: 'Web Agency Plus',
-      period: '2021 - 2022',
-      location: 'New York, NY',
-      description: [
-        'Built websites for small businesses using HTML, CSS, and JavaScript',
-        'Worked with WordPress and custom CMS solutions',
-        'Optimized websites for search engines and performance',
-        'Provided technical support and maintenance for client websites'
+        'Developed a fully responsive news website using HTML, CSS, and JavaScript, enabling users to seamlessly access and interact with news content across various devices',
+        'Implemented core functionalities including news submission, viewing, and comment addition, ensuring a dynamic and engaging user experience',
+        'Demonstrated strong front-end development skills by creating a user-friendly and visually appealing interface with clean and well-structured code',
+        'Adhered to best practices for web development'
       ]
     }
   ];
 
   const education = [
     {
-      degree: 'Bachelor of Science in Computer Science',
-      school: 'University of Technology',
-      period: '2019 - 2023',
-      location: 'New York, NY',
+      degree: 'B.Tech - Computer Science and Engineering',
+      school: 'LNCTS, Lakshmi Narain College of Technology & Science',
+      period: '2023 - 2027',
+      location: 'Bhopal, Madhya Pradesh',
       achievements: [
-        'Graduated Magna Cum Laude (GPA: 3.8/4.0)',
-        'Dean\'s List for 6 semesters',
-        'President of Computer Science Club',
-        'Capstone Project: E-commerce Platform with React and Node.js'
+        'Currently pursuing Bachelor of Technology in Computer Science',
+        'Focused on programming languages, data structures, and web development',
+        'Active participant in college technical activities'
+      ]
+    },
+    {
+      degree: 'High School Education',
+      school: 'CBSE Board',
+      period: '2021 - 2023',
+      location: 'India',
+      achievements: [
+        '12th (PCM) CBSE Board - 82%',
+        '10th CBSE Board - 90%'
       ]
     }
   ];
 
   const certifications = [
     {
-      name: 'React Developer Certification',
-      issuer: 'Meta',
-      year: '2023'
+      name: 'NEC \'24 Basic Track - Finalist',
+      issuer: 'E-Cell, IIT Bombay',
+      year: '2025',
+      credentialId: 'ecell2021'
     },
     {
-      name: 'AWS Certified Cloud Practitioner',
-      issuer: 'Amazon Web Services',
-      year: '2023'
+      name: 'National Science Olympiad Participation',
+      issuer: 'National Science Foundation',
+      year: '2025'
     },
     {
-      name: 'JavaScript Algorithms and Data Structures',
-      issuer: 'freeCodeCamp',
-      year: '2022'
+      name: 'Data Structures and Algorithms',
+      issuer: 'Coursera',
+      year: '2024'
+    },
+    {
+      name: 'JavaScript Essential',
+      issuer: 'Cisco Networking Academy',
+      year: '2024'
     }
   ];
 
   const skills = {
-    'Frontend': ['React', 'TypeScript', 'JavaScript', 'HTML5', 'CSS3', 'Tailwind CSS', 'Next.js'],
-    'Backend': ['Node.js', 'Express', 'MongoDB', 'PostgreSQL', 'GraphQL'],
-    'Tools': ['Git', 'Docker', 'AWS', 'Figma', 'Jest', 'Webpack', 'Vite']
+    'Programming': ['C', 'C++', 'JavaScript', 'Data Structures & Algorithms', 'Object-Oriented Programming'],
+    'Frontend': ['HTML5', 'CSS3', 'JavaScript', 'React.js', 'Responsive Design'],
+    'Tools & Others': ['Git', 'Video Editing', 'Problem Solving', 'Web Development']
   };
+
+  const extracurricular = [
+    {
+      category: 'Martial Arts',
+      activities: [
+        'Karate: Blue belt holder',
+        'District Bronze medalist',
+        'State level player'
+      ]
+    },
+    {
+      category: 'Sports',
+      activities: [
+        'Cricket: Part of inter-school team',
+        'Badminton: College level player'
+      ]
+    },
+    {
+      category: 'Communication & Leadership',
+      activities: [
+        'Won multiple debate competitions',
+        'Recognized as a good public speaker',
+        'Strong communication skills'
+      ]
+    }
+  ];
 
   return (
     <div className="resume">
@@ -98,8 +134,23 @@ const Resume = () => {
           {/* Header */}
           <div className="resume-header">
             <h1 className="heading-1">My <span className="text-gradient">Resume</span></h1>
+            <div className="personal-info">
+              <h2>Arnav Singh Rawat</h2>
+              <p>Bhopal, Madhya Pradesh</p>
+              <div className="contact-links">
+                <span>📧 rawatarnav180505@gmail.com</span>
+                <span>📱 +91-9343612820</span>
+                <a href="https://www.linkedin.com/in/arnav-singh-rawat-993725275/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                <a href="https://github.com/ArnavSinghRawat18" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a href="https://x.com/ArnavSinghRawa1" target="_blank" rel="noopener noreferrer">Twitter</a>
+                <a href="https://www.instagram.com/a.r.n.a.v_s.i.n.g.h_r.a.w.a.t/" target="_blank" rel="noopener noreferrer">Instagram</a>
+                <a href="https://wa.me/919343612820" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+                <span>LeetCode</span>
+                <span>GeeksforGeeks</span>
+              </div>
+            </div>
             <p className="resume-description">
-              A comprehensive overview of my professional experience, education, and skills.
+              Computer Science Engineering student with strong programming fundamentals and web development skills.
             </p>
             <div className="resume-actions">
               <button className="btn btn-primary" onClick={handleDownload}>
@@ -114,26 +165,32 @@ const Resume = () => {
           </div>
 
           <div className="resume-main">
-            {/* Experience Section */}
+            {/* Projects Section */}
             <section className="resume-section">
               <div className="section-header">
-                <FaBriefcase className="section-icon" />
-                <h2 className="section-title">Professional Experience</h2>
+                <FaCode className="section-icon" />
+                <h2 className="section-title">Projects</h2>
               </div>
               <div className="timeline">
-                {experience.map((job, index) => (
+                {projects.map((project, index) => (
                   <div key={index} className="timeline-item">
                     <div className="timeline-marker"></div>
                     <div className="timeline-content">
                       <div className="job-header">
-                        <h3 className="job-title">{job.title}</h3>
-                        <span className="job-period">{job.period}</span>
+                        <h3 className="job-title">{project.title}</h3>
+                        <span className="job-period">{project.period}</span>
                       </div>
                       <div className="job-company">
-                        <strong>{job.company}</strong> • {job.location}
+                        <strong>{project.tech}</strong>
+                        {project.links && (
+                          <span>
+                            {project.links.source && <> • <a href={project.links.source} target="_blank" rel="noopener noreferrer">Source Code</a></>}
+                            {project.links.live && <> • <a href={project.links.live} target="_blank" rel="noopener noreferrer">Live Website</a></>}
+                          </span>
+                        )}
                       </div>
                       <ul className="job-description">
-                        {job.description.map((item, itemIndex) => (
+                        {project.description.map((item, itemIndex) => (
                           <li key={itemIndex}>{item}</li>
                         ))}
                       </ul>
@@ -202,7 +259,28 @@ const Resume = () => {
                     <div className="certification-details">
                       <span className="certification-issuer">{cert.issuer}</span>
                       <span className="certification-year">{cert.year}</span>
+                      {cert.credentialId && <span className="credential-id">ID: {cert.credentialId}</span>}
                     </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Extracurricular Activities Section */}
+            <section className="resume-section">
+              <div className="section-header">
+                <FaBriefcase className="section-icon" />
+                <h2 className="section-title">Extracurricular Activities</h2>
+              </div>
+              <div className="extracurricular-grid">
+                {extracurricular.map((item, index) => (
+                  <div key={index} className="extracurricular-category">
+                    <h3 className="extracurricular-title">{item.category}</h3>
+                    <ul className="extracurricular-list">
+                      {item.activities.map((activity, actIndex) => (
+                        <li key={actIndex}>{activity}</li>
+                      ))}
+                    </ul>
                   </div>
                 ))}
               </div>

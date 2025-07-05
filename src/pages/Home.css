@@ -303,6 +303,78 @@
   transform: translateY(-1px);
 }
 
+/* Location Alert Styles */
+.location-alert {
+  position: fixed;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  max-width: 500px;
+  width: 90%;
+  animation: slideDown 0.3s ease-out;
+}
+
+.location-alert-content {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 10px 40px var(--shadow-dark);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.5rem;
+}
+
+.alert-icon {
+  font-size: 3rem;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: pulse 2s infinite;
+}
+
+.alert-text h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.alert-text p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.alert-actions {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+}
+
+.btn-small {
+  padding: 0.8rem 1.5rem;
+  font-size: 0.9rem;
+  flex: 1;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
 /* Responsive Design */
 @media (max-width: 1024px) {
   .hero-section {
@@ -344,6 +416,23 @@
   .gradient-orb {
     display: none;
   }
+
+  .location-alert {
+    top: 80px;
+    width: 95%;
+  }
+  
+  .location-alert-content {
+    padding: 1.5rem;
+  }
+  
+  .alert-actions {
+    flex-direction: column;
+  }
+  
+  .btn-small {
+    flex: none;
+  }
 }
 
 @media (max-width: 480px) {
@@ -373,5 +462,17 @@
     width: 45px;
     height: 45px;
     font-size: 1rem;
+  }
+
+  .location-alert-content {
+    padding: 1rem;
+  }
+  
+  .alert-icon {
+    font-size: 2.5rem;
+  }
+  
+  .alert-text h3 {
+    font-size: 1.2rem;
   }
 }

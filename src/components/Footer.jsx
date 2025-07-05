@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaGithub, FaLinkedin, FaTwitter, FaHeart } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaTwitter, FaInstagram, FaWhatsapp, FaHeart } from 'react-icons/fa';
 import './Footer.css';
 
 const Footer = () => {
@@ -8,18 +8,28 @@ const Footer = () => {
   const socialLinks = [
     {
       icon: <FaGithub />,
-      url: 'https://github.com/arnavsinghrawat',
+      url: 'https://github.com/ArnavSinghRawat18',
       label: 'GitHub'
     },
     {
       icon: <FaLinkedin />,
-      url: 'https://linkedin.com/in/arnavsinghrawat',
+      url: 'https://www.linkedin.com/in/arnav-singh-rawat-993725275/',
       label: 'LinkedIn'
     },
     {
       icon: <FaTwitter />,
-      url: 'https://twitter.com/arnavsinghrawat',
+      url: 'https://x.com/ArnavSinghRawa1',
       label: 'Twitter'
+    },
+    {
+      icon: <FaInstagram />,
+      url: 'https://www.instagram.com/a.r.n.a.v_s.i.n.g.h_r.a.w.a.t/',
+      label: 'Instagram'
+    },
+    {
+      icon: <FaWhatsapp />,
+      url: 'https://wa.me/919343612820',
+      label: 'WhatsApp'
     }
   ];
 
