@@ -8,15 +8,10 @@ import {
   FaGitAlt, 
   FaGithub,
   FaFigma,
-  FaDatabase,
   FaCode
 } from 'react-icons/fa';
 import { 
   SiTailwindcss, 
-  SiNextdotjs, 
-  SiMongodb, 
-  SiMysql,
-  SiPostman,
   SiNetlify,
   SiVercel
 } from 'react-icons/si';
@@ -27,57 +22,47 @@ const Skills = () => {
     {
       title: 'Frontend Technologies',
       skills: [
-        { name: 'React.js', icon: <FaReact />, level: 90, color: '#61DAFB' },
-        { name: 'JavaScript', icon: <FaJs />, level: 85, color: '#F7DF1E' },
-        { name: 'HTML5', icon: <FaHtml5 />, level: 95, color: '#E34F26' },
-        { name: 'CSS3', icon: <FaCss3Alt />, level: 90, color: '#1572B6' },
-        { name: 'Bootstrap', icon: <FaBootstrap />, level: 85, color: '#7952B3' },
-        { name: 'Tailwind CSS', icon: <SiTailwindcss />, level: 80, color: '#06B6D4' },
-        { name: 'Next.js', icon: <SiNextdotjs />, level: 75, color: '#000000' }
+        { name: 'HTML5', icon: <FaHtml5 />, level: 90, color: '#E34F26' },
+        { name: 'CSS3', icon: <FaCss3Alt />, level: 85, color: '#1572B6' },
+        { name: 'JavaScript', icon: <FaJs />, level: 80, color: '#F7DF1E' },
+        { name: 'React.js', icon: <FaReact />, level: 75, color: '#61DAFB' },
+        { name: 'Bootstrap', icon: <FaBootstrap />, level: 70, color: '#7952B3' },
+        { name: 'Tailwind CSS', icon: <SiTailwindcss />, level: 65, color: '#06B6D4' }
       ]
     },
     {
-      title: 'Backend & Database',
+      title: 'Development Tools & Platforms',
       skills: [
-        { name: 'MongoDB', icon: <SiMongodb />, level: 80, color: '#47A248' },
-        { name: 'MySQL', icon: <SiMysql />, level: 75, color: '#4479A1' },
-        { name: 'Database Design', icon: <FaDatabase />, level: 70, color: '#336791' }
-      ]
-    },
-    {
-      title: 'Development Tools',
-      skills: [
-        { name: 'Git', icon: <FaGitAlt />, level: 85, color: '#F05032' },
-        { name: 'GitHub', icon: <FaGithub />, level: 85, color: '#181717' },
-        { name: 'VS Code', icon: <FaCode />, level: 90, color: '#007ACC' },
-        { name: 'Postman', icon: <SiPostman />, level: 80, color: '#FF6C37' },
-        { name: 'Figma', icon: <FaFigma />, level: 75, color: '#F24E1E' },
-        { name: 'Netlify', icon: <SiNetlify />, level: 80, color: '#00C7B7' },
-        { name: 'Vercel', icon: <SiVercel />, level: 80, color: '#000000' }
+        { name: 'Git', icon: <FaGitAlt />, level: 75, color: '#F05032' },
+        { name: 'GitHub', icon: <FaGithub />, level: 80, color: '#181717' },
+        { name: 'VS Code', icon: <FaCode />, level: 85, color: '#007ACC' },
+        { name: 'Figma', icon: <FaFigma />, level: 60, color: '#F24E1E' },
+        { name: 'Netlify', icon: <SiNetlify />, level: 70, color: '#00C7B7' },
+        { name: 'Vercel', icon: <SiVercel />, level: 65, color: '#000000' }
       ]
     }
   ];
 
   const achievements = [
     {
-      title: 'Projects Completed',
-      value: '50+',
-      description: 'Successful web applications delivered'
+      title: 'Projects Built',
+      value: '10+',
+      description: 'Personal and learning projects completed'
     },
     {
-      title: 'Years Experience',
-      value: '3+',
-      description: 'Years of professional development'
+      title: 'Years Learning',
+      value: '2+',
+      description: 'Years of dedicated web development study'
     },
     {
       title: 'Technologies',
-      value: '15+',
-      description: 'Different technologies mastered'
+      value: '12+',
+      description: 'Frontend technologies learned and practiced'
     },
     {
-      title: 'Satisfied Clients',
-      value: '25+',
-      description: 'Happy clients and counting'
+      title: 'GitHub Repos',
+      value: '15+',
+      description: 'Public repositories and contributions'
     }
   ];
 
@@ -152,25 +137,25 @@ const Skills = () => {
             <div className="learning-content">
               <h2 className="heading-2">Currently <span className="text-gradient">Learning</span></h2>
               <p>
-                I believe in continuous learning and staying up-to-date with the latest technologies. 
-                Currently, I'm diving deeper into:
+                As a Computer Science student, I'm passionate about continuous learning and staying up-to-date with the latest frontend technologies. 
+                Currently, I'm focusing on:
               </p>
               <div className="learning-list">
                 <div className="learning-item">
-                  <span className="learning-bullet">🚀</span>
-                  <span>Advanced React Patterns & Performance Optimization</span>
+                  <span className="learning-bullet">⚛️</span>
+                  <span>Advanced React Concepts & State Management</span>
                 </div>
                 <div className="learning-item">
-                  <span className="learning-bullet">☁️</span>
-                  <span>Cloud Architecture with AWS & Serverless</span>
+                  <span className="learning-bullet">🎨</span>
+                  <span>Modern CSS Frameworks & Animation Libraries</span>
                 </div>
                 <div className="learning-item">
                   <span className="learning-bullet">📱</span>
-                  <span>React Native for Mobile Development</span>
+                  <span>Responsive Design & Mobile-First Development</span>
                 </div>
                 <div className="learning-item">
-                  <span className="learning-bullet">🤖</span>
-                  <span>AI Integration in Web Applications</span>
+                  <span className="learning-bullet">🚀</span>
+                  <span>Performance Optimization & Best Practices</span>
                 </div>
               </div>
             </div>

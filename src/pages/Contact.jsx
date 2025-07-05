@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { FaUser, FaEnvelope, FaPhone, FaMapMarkerAlt, FaPaperPlane } from 'react-icons/fa';
+import { FaUser, FaEnvelope, FaMapMarkerAlt, FaPaperPlane } from 'react-icons/fa';
+import emailjs from '@emailjs/browser';
+import { EMAILJS_CONFIG } from '../config/emailjs';
 import './Contact.css';
 
 const Contact = () => {
@@ -15,19 +17,13 @@ const Contact = () => {
     {
       icon: <FaEnvelope />,
       title: 'Email',
-      value: 'arnavsinghrawat@example.com',
-      link: 'mailto:arnavsinghrawat@example.com'
-    },
-    {
-      icon: <FaPhone />,
-      title: 'Phone',
-      value: '+91 XXXXX XXXXX',
-      link: 'tel:+91XXXXXXXXX'
+      value: 'rawatarnav180505@gmail.com',
+      link: 'mailto:rawatarnav180505@gmail.com'
     },
     {
       icon: <FaMapMarkerAlt />,
       title: 'Location',
-      value: 'Dehradun, India',
+      value: 'Bhopal, MP, India',
       link: null
     }
   ];
@@ -75,8 +71,17 @@ const Contact = () => {
     setSubmitStatus(null);
 
     try {
-      // Simulate form submission
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // EmailJS configuration
+      const { serviceID, templateID, publicKey } = EMAILJS_CONFIG;
+
+      const templateParams = {
+        from_name: formData.name,
+        from_email: formData.email,
+        message: formData.message,
+        to_email: 'rawatarnav180505@gmail.com'
+      };
+
+      await emailjs.send(serviceID, templateID, templateParams, publicKey);
       
       setSubmitStatus({
         type: 'success',
@@ -89,9 +94,10 @@ const Contact = () => {
         message: ''
       });
     } catch (error) {
+      console.error('EmailJS error:', error);
       setSubmitStatus({
         type: 'error',
-        message: 'Something went wrong. Please try again.'
+        message: 'Something went wrong. Please try again or email me directly.'
       });
     } finally {
       setIsSubmitting(false);

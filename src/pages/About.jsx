@@ -1,6 +1,7 @@
 import React from 'react';
-import { FaGraduationCap, FaBriefcase, FaAward, FaMapMarkerAlt } from 'react-icons/fa';
+import { FaGraduationCap, FaAward, FaMapMarkerAlt } from 'react-icons/fa';
 import './About.css';
+import profilePic from '../assets/Profilepic.jpg';
 
 const About = () => {
   const timelineData = [
@@ -51,8 +52,8 @@ const About = () => {
             <div className="profile-section">
               <div className="profile-image">
                 <img 
-                  src={`${process.env.PUBLIC_URL}/logo192.png`}
-                  alt="Profile" 
+                  src={profilePic}
+                  alt="Arnav Singh Rawat" 
                   onError={(e) => {
                     e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDMwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjMkEyQTJBIi8+CjxjaXJjbGUgY3g9IjE1MCIgY3k9IjEyMCIgcj0iNDAiIGZpbGw9IiM0RjlFRkYiLz4KPHBhdGggZD0iTTkwIDE4MEM5MCAyMTAgMTE3LjkgMjM1IDE1MCAyMzVDMTgyLjEgMjM1IDIxMCAyMTAgMjEwIDE4MEgyMTBWMjcwSDkwVjE4MFoiIGZpbGw9IiM0RjlFRkYiLz4KPC9zdmc+';
                   }}
