@@ -136,7 +136,7 @@ const Resume = () => {
             <h1 className="heading-1">My <span className="text-gradient">Resume</span></h1>
             <div className="personal-info">
               <h2>Arnav Singh Rawat</h2>
-              <p>Bhopal, Madhya Pradesh</p>
+              <p>Bhopal, MP, India</p>
               <div className="contact-links">
                 <span>📧 rawatarnav180505@gmail.com</span>
                 <span>📱 +91-9343612820</span>
@@ -150,7 +150,7 @@ const Resume = () => {
               </div>
             </div>
             <p className="resume-description">
-              Computer Science Engineering student with strong programming fundamentals and web development skills.
+              Computer Science Engineering student with strong programming fundamentals and web development skills. Passionate about learning new technologies and building innovative projects.
             </p>
             <div className="resume-actions">
               <button className="btn btn-primary" onClick={handleDownload}>

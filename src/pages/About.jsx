@@ -8,37 +8,37 @@ const About = () => {
       type: 'education',
       icon: <FaGraduationCap />,
       title: 'Bachelor of Technology - Computer Science',
-      organization: 'Graphic Era Deemed to be University',
-      period: '2021 - 2025',
-      description: 'Currently pursuing B.Tech in Computer Science with focus on web development and software engineering.',
-      location: 'Dehradun, India'
+      organization: 'LNCTS, Lakshmi Narain College of Technology & Science',
+      period: '2023 - 2027',
+      description: 'Currently pursuing B.Tech in Computer Science and Engineering with focus on programming, data structures, and web development.',
+      location: 'Bhopal, MP, India'
     },
     {
       type: 'education',
       icon: <FaGraduationCap />,
-      title: 'Higher Secondary Education',
-      organization: 'Kendriya Vidyalaya',
-      period: '2019 - 2021',
-      description: 'Completed 12th grade with excellent academic performance.',
+      title: 'Higher Secondary Education (12th)',
+      organization: 'CBSE Board',
+      period: '2021 - 2023',
+      description: 'Completed 12th grade in PCM (Physics, Chemistry, Mathematics) with 82% marks.',
       location: 'India'
     },
     {
-      type: 'work',
-      icon: <FaBriefcase />,
-      title: 'Frontend Developer',
-      organization: 'Freelance Projects',
-      period: '2022 - Present',
-      description: 'Developing responsive web applications using React.js, JavaScript, and modern CSS frameworks.',
-      location: 'Remote'
+      type: 'education',
+      icon: <FaGraduationCap />,
+      title: 'Secondary Education (10th)',
+      organization: 'CBSE Board',
+      period: '2019 - 2021',
+      description: 'Completed 10th grade with 90% marks.',
+      location: 'India'
     },
     {
       type: 'achievement',
       icon: <FaAward />,
-      title: 'Web Development Projects',
-      organization: 'Personal Portfolio',
-      period: '2022 - Present',
-      description: 'Built multiple responsive websites and web applications using modern technologies.',
-      location: 'Various'
+      title: 'Personal Projects & Learning',
+      organization: 'Self-Directed Learning',
+      period: '2024 - Present',
+      description: 'Built multiple responsive websites and web applications using modern technologies like React.js, JavaScript, and CSS.',
+      location: 'Bhopal, MP, India'
     }
   ];
 
@@ -68,16 +68,16 @@ const About = () => {
               <div className="bio">
                 <p className="body-large">
                   Hello! I'm Arnav Singh Rawat, a passionate Front-End Developer currently pursuing B.Tech 
-                  in Computer Science from Graphic Era Deemed to be University, Dehradun.
+                  in Computer Science and Engineering from LNCTS, Lakshmi Narain College of Technology & Science, Bhopal.
                 </p>
                 <p>
                   I specialize in creating responsive, user-friendly web applications using modern technologies 
-                  like React.js, JavaScript, HTML5, CSS3, and various CSS frameworks including Bootstrap and Tailwind CSS. 
+                  like React.js, JavaScript, HTML5, CSS3, and various CSS frameworks. 
                   My focus is on delivering clean, efficient code and exceptional user experiences.
                 </p>
                 <p>
-                  With hands-on experience in both frontend and backend technologies including MongoDB and MySQL, 
-                  I enjoy building full-stack applications. I'm always eager to learn new technologies and 
+                  As a student, I'm passionate about learning and implementing new technologies. I enjoy building 
+                  projects that challenge me and help me grow as a developer. I'm always eager to learn new technologies and 
                   stay updated with the latest trends in web development.
                 </p>
                 <p>
@@ -91,12 +91,12 @@ const About = () => {
                 <div className="fact">
                   <span className="fact-label">Location</span>
                   <span className="fact-value">
-                    <FaMapMarkerAlt /> New York, NY
+                    <FaMapMarkerAlt /> Bhopal, MP, India
                   </span>
                 </div>
                 <div className="fact">
-                  <span className="fact-label">Experience</span>
-                  <span className="fact-value">3+ Years</span>
+                  <span className="fact-label">Status</span>
+                  <span className="fact-value">Student & Learning</span>
                 </div>
                 <div className="fact">
                   <span className="fact-label">Focus</span>

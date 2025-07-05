@@ -230,8 +230,8 @@ const Home = () => {
                 </span>
               </div>
               <p className="hero-description">
-                Front-End Developer with expertise in React, JavaScript, and modern web technologies.
-                Passionate about creating responsive, user-friendly interfaces and delivering exceptional digital experiences.
+                Computer Science student passionate about Front-End Development with React, JavaScript, and modern web technologies.
+                Enthusiastic about learning, creating responsive user interfaces, and building innovative projects.
               </p>
               
               <div className="hero-actions">
