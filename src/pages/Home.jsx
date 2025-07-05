@@ -9,6 +9,8 @@ const Home = () => {
   const [weatherLocation, setWeatherLocation] = useState('Unknown Location');
   const [locationError, setLocationError] = useState(null);
   const [showLocationAlert, setShowLocationAlert] = useState(false);
+  const [weatherPermissionGranted, setWeatherPermissionGranted] = useState(false);
+  const [weatherPermissionDenied, setWeatherPermissionDenied] = useState(false);
   const [quote, setQuote] = useState(null);
   const [typewriterText, setTypewriterText] = useState('');
   
@@ -56,61 +58,62 @@ const Home = () => {
 
   // Weather API with User Location
   useEffect(() => {
-    const fetchWeather = () => {
-      if ('geolocation' in navigator) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            const { latitude, longitude } = position.coords;
-            fetchWeatherByLocation(latitude, longitude);
-          },
-          (error) => {
-            console.error('Geolocation error:', error);
-            setLocationError('Location access denied');
-            setShowLocationAlert(true);
-            // Fallback to default location (NYC)
-            fetchWeatherByLocation(40.7128, -74.0060);
-            setWeatherLocation('New York City, USA (Default)');
-          },
-          {
-            enableHighAccuracy: true,
-            timeout: 10000,
-            maximumAge: 300000 // Cache for 5 minutes
-          }
-        );
-      } else {
-        console.error('Geolocation not supported');
-        setLocationError('Geolocation not supported');
-        setShowLocationAlert(true);
-        // Fallback to default location
-        fetchWeatherByLocation(40.7128, -74.0060);
-        setWeatherLocation('New York City, USA (Default)');
-      }
-    };
-
-    fetchWeather();
+    // Check if user previously granted or denied permission
+    const savedPermission = localStorage.getItem('weatherPermission');
+    if (savedPermission === 'granted') {
+      setWeatherPermissionGranted(true);
+      fetchWeatherWithPermission();
+    } else if (savedPermission === 'denied') {
+      setWeatherPermissionDenied(true);
+    } else {
+      // Show alert to ask for permission
+      setShowLocationAlert(true);
+    }
   }, []);
 
-  // Function to handle location permission request
-  const handleAllowLocation = () => {
-    setShowLocationAlert(false);
+  const fetchWeatherWithPermission = () => {
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
-          setLocationError(null);
           fetchWeatherByLocation(latitude, longitude);
         },
         (error) => {
           console.error('Geolocation error:', error);
-          // Keep using default location but hide alert
+          setLocationError('Unable to get your location');
         },
         {
           enableHighAccuracy: true,
           timeout: 10000,
-          maximumAge: 300000
+          maximumAge: 300000 // Cache for 5 minutes
         }
       );
+    } else {
+      setLocationError('Geolocation not supported by your browser');
     }
+  };
+
+  // Function to handle location permission request
+  const handleAllowLocation = () => {
+    setShowLocationAlert(false);
+    setWeatherPermissionGranted(true);
+    setWeatherPermissionDenied(false);
+    localStorage.setItem('weatherPermission', 'granted');
+    fetchWeatherWithPermission();
+  };
+
+  const handleDenyLocation = () => {
+    setShowLocationAlert(false);
+    setWeatherPermissionDenied(true);
+    setWeatherPermissionGranted(false);
+    localStorage.setItem('weatherPermission', 'denied');
+  };
+
+  const handleEnableWeather = () => {
+    setWeatherPermissionDenied(false);
+    setWeatherPermissionGranted(true);
+    localStorage.setItem('weatherPermission', 'granted');
+    fetchWeatherWithPermission();
   };
 
   // Quote API
@@ -203,7 +206,7 @@ const Home = () => {
               <button className="btn btn-primary btn-small" onClick={handleAllowLocation}>
                 Allow Location
               </button>
-              <button className="btn btn-secondary btn-small" onClick={() => setShowLocationAlert(false)}>
+              <button className="btn btn-secondary btn-small" onClick={handleDenyLocation}>
                 Maybe Later
               </button>
             </div>
@@ -266,35 +269,49 @@ const Home = () => {
               </div>
 
               {/* Weather */}
-              <div className="info-card weather-card">
-                <h3>Current Weather</h3>
-                {weather ? (
-                  <div className="weather">
-                    <div className="weather-location">{weatherLocation}</div>
-                    <div className="temperature">{Math.round(weather.temperature)}°C</div>
-                    <div className="weather-desc">
-                      Wind: {weather.windspeed} km/h
+              {weatherPermissionGranted ? (
+                <div className="info-card weather-card">
+                  <h3>Current Weather</h3>
+                  {weather ? (
+                    <div className="weather">
+                      <div className="weather-location">{weatherLocation}</div>
+                      <div className="temperature">{Math.round(weather.temperature)}°C</div>
+                      <div className="weather-desc">
+                        Wind: {weather.windspeed} km/h
+                      </div>
                     </div>
-                  </div>
-                ) : locationError ? (
-                  <div className="weather-error">
-                    <div className="error-text">{locationError}</div>
-                    <div className="error-subtitle">Using default location</div>
+                  ) : locationError ? (
+                    <div className="weather-error">
+                      <div className="error-text">{locationError}</div>
+                      <button 
+                        className="retry-location-btn"
+                        onClick={fetchWeatherWithPermission}
+                        aria-label="Retry location access"
+                      >
+                        Try Again
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="weather-loading">
+                      <div className="loading"></div>
+                      <div className="loading-text">Getting your location...</div>
+                    </div>
+                  )}
+                </div>
+              ) : weatherPermissionDenied ? (
+                <div className="info-card weather-card weather-disabled">
+                  <h3>Weather</h3>
+                  <div className="weather-permission-message">
+                    <p>Weather is disabled</p>
                     <button 
-                      className="retry-location-btn"
-                      onClick={() => window.location.reload()}
-                      aria-label="Retry location access"
+                      className="btn btn-primary btn-small"
+                      onClick={handleEnableWeather}
                     >
-                      Try Again
+                      Enable Weather
                     </button>
                   </div>
-                ) : (
-                  <div className="weather-loading">
-                    <div className="loading"></div>
-                    <div className="loading-text">Getting your location...</div>
-                  </div>
-                )}
-              </div>
+                </div>
+              ) : null}
 
               {/* Quote */}
               {quote && (
