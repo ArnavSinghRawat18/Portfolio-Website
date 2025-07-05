@@ -19,7 +19,7 @@ const Projects = () => {
       technologies: ['React.js', 'CSS3', 'JavaScript', 'EmailJS', 'React Router'],
       category: 'frontend',
       githubUrl: 'https://github.com/ArnavSinghRawat18/Portfolio-Website',
-      liveUrl: 'https://arnav-singh-rawat-portfolio.netlify.app',
+      liveUrl: 'https://686940481f7b30000842a400--arnavsinghrawatportfolio.netlify.app',
       featured: true
     },
     {

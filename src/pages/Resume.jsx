@@ -20,7 +20,7 @@ const Resume = () => {
       period: '2024',
       links: {
         source: 'https://github.com/ArnavSinghRawat18/Portfolio-Website',
-        live: 'https://arnav-singh-rawat-portfolio.netlify.app'
+        live: 'https://686940481f7b30000842a400--arnavsinghrawatportfolio.netlify.app'
       },
       description: [
         'Developed a modern, responsive portfolio website showcasing skills and projects with animated coding workspace',
