@@ -15,34 +15,83 @@ const Resume = () => {
 
   const projects = [
     {
-      title: '2048 Game',
-      tech: 'HTML, CSS, JavaScript',
+      title: 'Portfolio Website',
+      tech: 'React.js, CSS3, JavaScript, EmailJS, React Router',
       period: '2024',
       links: {
-        source: '#',
-        live: '#'
+        source: 'https://github.com/ArnavSinghRawat18/Portfolio-Website',
+        live: 'https://arnav-singh-rawat-portfolio.netlify.app'
+      },
+      description: [
+        'Developed a modern, responsive portfolio website showcasing skills and projects with animated coding workspace',
+        'Integrated real-time weather API and daily inspiration quotes for enhanced user engagement',
+        'Implemented smooth scroll animations, dark/light theme toggle, and mobile-first responsive design',
+        'Built contact form with EmailJS integration for direct communication functionality',
+        'Deployed on Netlify with continuous integration and optimized performance for all device types'
+      ]
+    },
+    {
+      title: '2048 Game',
+      tech: 'HTML5, CSS3, JavaScript, Responsive Design, Touch Controls',
+      period: '2024',
+      links: {
+        source: 'https://github.com/ArnavSinghRawat18/2048-game',
+        live: 'https://lnkd.in/e7sJYN_7'
       },
       description: [
         'Developed a fully responsive and interactive clone of the classic 2048 game, playable on both desktop and mobile devices',
-        'Implemented core game mechanics such as dynamic tile merging, score tracking, and random tile generation using JavaScript',
-        'Added touch gesture support for mobile users, enhancing accessibility and user experience',
+        'Implemented core game mechanics such as dynamic tile merging, score tracking, and random tile generation using vanilla JavaScript',
+        'Added touch gesture support and swipe controls for mobile users, enhancing accessibility and user experience',
         'Designed an intuitive UI/UX with dark/light mode toggle, engaging tile animations, and visual feedback using CSS transitions',
         'Applied modular code practices and event-driven programming to manage gameplay logic and interface updates'
       ]
     },
     {
-      title: 'Responsive News Website',
-      tech: 'HTML, CSS, JavaScript',
+      title: 'Password Generator App',
+      tech: 'React.js, Tailwind CSS, Vite, React Hooks',
       period: '2024',
       links: {
-        source: '#',
-        live: '#'
+        source: 'https://github.com/ArnavSinghRawat18/Password-Generator-using-react',
+        live: 'https://lnkd.in/dg9_e9dx'
       },
       description: [
-        'Developed a fully responsive news website using HTML, CSS, and JavaScript, enabling users to seamlessly access and interact with news content across various devices',
-        'Implemented core functionalities including news submission, viewing, and comment addition, ensuring a dynamic and engaging user experience',
-        'Demonstrated strong front-end development skills by creating a user-friendly and visually appealing interface with clean and well-structured code',
-        'Adhered to best practices for web development'
+        'Built a fully responsive password generator with React.js and Tailwind CSS featuring glassmorphism UI design',
+        'Implemented customizable password length (8-32 characters) with toggle options for numbers and special characters',
+        'Added one-click copy to clipboard functionality with toast notifications for better user feedback',
+        'Utilized React hooks (useState, useEffect, useCallback) for state management and performance optimization',
+        'Deployed with Vite for fast development and optimized build performance'
+      ]
+    },
+    {
+      title: 'Form Validation with Password Toggle',
+      tech: 'HTML5, CSS3, JavaScript, DOM Manipulation, RegEx',
+      period: '2024',
+      links: {
+        source: 'https://github.com/ArnavSinghRawat18/Form-validation-using-regax',
+        live: 'https://formvalidationarnav.netlify.app/'
+      },
+      description: [
+        'Created a responsive registration form with real-time input validation using vanilla JavaScript and regular expressions',
+        'Implemented comprehensive error handling for empty fields, invalid email formats, and password strength requirements',
+        'Added show/hide password toggle functionality with eye icon for enhanced user experience',
+        'Designed clean UI with success redirect and form reset functionality upon successful validation',
+        'Applied modern form validation techniques and accessibility best practices'
+      ]
+    },
+    {
+      title: 'Responsive News Website',
+      tech: 'HTML5, CSS3, Responsive Design, CSS Grid, Flexbox',
+      period: '2024',
+      links: {
+        source: 'https://github.com/ARNAVtitan/News_website',
+        live: 'https://arnavnews.netlify.app/'
+      },
+      description: [
+        'Developed a fully responsive news website using HTML and CSS, featuring sleek design and seamless user experience',
+        'Demonstrated advanced CSS layout techniques including CSS Grid and Flexbox for optimal content presentation',
+        'Implemented responsive design principles ensuring compatibility across various devices and screen sizes',
+        'Created modern web design aesthetics with clean typography, proper spacing, and intuitive navigation',
+        'Adhered to web development best practices for semantic HTML structure and maintainable CSS code'
       ]
     }
   ];
