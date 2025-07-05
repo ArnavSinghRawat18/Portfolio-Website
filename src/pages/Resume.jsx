@@ -145,8 +145,8 @@ const Resume = () => {
                 <a href="https://x.com/ArnavSinghRawa1" target="_blank" rel="noopener noreferrer">Twitter</a>
                 <a href="https://www.instagram.com/a.r.n.a.v_s.i.n.g.h_r.a.w.a.t/" target="_blank" rel="noopener noreferrer">Instagram</a>
                 <a href="https://wa.me/919343612820" target="_blank" rel="noopener noreferrer">WhatsApp</a>
-                <span>LeetCode</span>
-                <span>GeeksforGeeks</span>
+                <a href="https://leetcode.com/u/rawatarnav180505/" target="_blank" rel="noopener noreferrer">LeetCode</a>
+                <a href="https://www.geeksforgeeks.org/user/rawatarna61ez/" target="_blank" rel="noopener noreferrer">GeeksforGeeks</a>
               </div>
             </div>
             <p className="resume-description">

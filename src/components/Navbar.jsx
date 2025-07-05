@@ -10,6 +10,7 @@ const Navbar = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [weather, setWeather] = useState(null);
   const [weatherLocation, setWeatherLocation] = useState('Unknown');
+  const [locationPermissionDenied, setLocationPermissionDenied] = useState(false);
   const location = useLocation();
 
   const navItems = [
@@ -60,9 +61,15 @@ const Navbar = () => {
         (position) => {
           const { latitude, longitude } = position.coords;
           fetchWeatherByLocation(latitude, longitude);
+          localStorage.setItem('weatherPermission', 'granted');
+          setLocationPermissionDenied(false);
         },
         (error) => {
           console.error('Geolocation error:', error);
+          // If user denies permission, hide weather icon
+          setLocationPermissionDenied(true);
+          setWeather(null);
+          localStorage.setItem('weatherPermission', 'denied');
         },
         {
           enableHighAccuracy: true,
@@ -76,6 +83,11 @@ const Navbar = () => {
   useEffect(() => {
     const savedPermission = localStorage.getItem('weatherPermission');
     if (savedPermission === 'granted') {
+      fetchWeatherWithPermission();
+    } else if (savedPermission === 'denied') {
+      setLocationPermissionDenied(true);
+    } else {
+      // Try to get permission on first visit
       fetchWeatherWithPermission();
     }
   }, [fetchWeatherWithPermission]);
@@ -120,7 +132,7 @@ const Navbar = () => {
               <FaClock />
               <span>{formatTime(currentTime)}</span>
             </div>
-            {weather && (
+            {weather && !locationPermissionDenied && (
               <div className="navbar-weather">
                 <FaCloudSun />
                 <span>{Math.round(weather.temperature)}°C</span>

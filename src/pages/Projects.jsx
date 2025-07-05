@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import { FaGithub, FaExternalLinkAlt, FaFilter } from 'react-icons/fa';
 import './Projects.css';
+import game2048Screenshot from '../assets/2048 game.jpg';
+import portfolioScreenshot from '../assets/portfolio-website.jpg';
+import passwordGeneratorScreenshot from '../assets/password-generator.jpg';
+import formValidationScreenshot from '../assets/form-validation.jpg';
+import newsWebsiteScreenshot from '../assets/news-website.jpg';
 
 const Projects = () => {
   const [activeFilter, setActiveFilter] = useState('all');
@@ -8,68 +13,57 @@ const Projects = () => {
   const projects = [
     {
       id: 1,
-      title: 'E-Commerce Website',
-      description: 'A responsive e-commerce website with modern UI/UX, product catalog, shopping cart, and checkout functionality.',
-      image: '/api/placeholder/400/250',
-      technologies: ['React.js', 'CSS3', 'JavaScript', 'Bootstrap'],
+      title: 'Portfolio Website',
+      description: 'A modern, responsive portfolio website showcasing my skills and projects. Features animated coding workspace, real-time weather integration, daily inspiration quotes, and smooth scroll animations.',
+      image: portfolioScreenshot,
+      technologies: ['React.js', 'CSS3', 'JavaScript', 'EmailJS', 'React Router'],
       category: 'frontend',
-      githubUrl: 'https://github.com/arnavsinghrawat',
-      liveUrl: 'https://ecommerce-demo.netlify.app',
+      githubUrl: 'https://github.com/ArnavSinghRawat18/Portfolio-Website',
+      liveUrl: 'https://arnav-singh-rawat-portfolio.netlify.app',
       featured: true
     },
     {
       id: 2,
-      title: 'Personal Portfolio Website',
-      description: 'A fully responsive portfolio website showcasing projects, skills, and professional experience with dark/light theme.',
-      image: '/api/placeholder/400/250',
-      technologies: ['React.js', 'CSS3', 'JavaScript', 'React Router'],
-      category: 'frontend',
-      githubUrl: 'https://github.com/arnavsinghrawat',
-      liveUrl: 'https://arnavportfolio.netlify.app',
+      title: '2048 Game',
+      description: 'A fully responsive, mobile-friendly 2048 game built with vanilla HTML, CSS, and JavaScript. Features dark/light theme toggle, smooth tile merge animations, touch-friendly controls, and works seamlessly on both desktop and mobile devices.',
+      image: game2048Screenshot,
+      technologies: ['HTML5', 'CSS3', 'JavaScript', 'Responsive Design', 'Touch Controls'],
+      category: 'interactive',
+      githubUrl: 'https://github.com/ArnavSinghRawat18/2048-game',
+      liveUrl: 'https://lnkd.in/e7sJYN_7',
       featured: true
     },
     {
       id: 3,
-      title: 'Weather App',
-      description: 'A weather application with real-time data, location-based forecasts, and responsive design.',
-      image: '/api/placeholder/400/250',
-      technologies: ['React.js', 'Weather API', 'CSS3', 'JavaScript'],
-      category: 'frontend',
-      githubUrl: 'https://github.com/arnavsinghrawat',
-      liveUrl: 'https://weather-app-demo.netlify.app',
-      featured: false
+      title: 'Password Generator App',
+      description: 'A fully responsive password generator built with React.js and Tailwind CSS. Features customizable password length (8-32 characters), toggle options for numbers and special characters, one-click copy to clipboard with toast alerts, and glassmorphism UI design.',
+      image: passwordGeneratorScreenshot,
+      technologies: ['React.js', 'Tailwind CSS', 'Vite', 'React Hooks', 'Responsive Design'],
+      category: 'react',
+      githubUrl: 'https://github.com/ArnavSinghRawat18/Password-Generator-using-react',
+      liveUrl: 'https://lnkd.in/dg9_e9dx',
+      featured: true
     },
     {
       id: 4,
-      title: 'Todo List Application',
-      description: 'A feature-rich todo application with CRUD operations, local storage, and intuitive user interface.',
-      image: '/api/placeholder/400/250',
-      technologies: ['React.js', 'CSS3', 'Local Storage', 'JavaScript'],
+      title: 'Form Validation with Password Toggle',
+      description: 'A responsive registration form built with vanilla HTML, CSS, and JavaScript. Features real-time input validation, error handling for empty and invalid fields, password strength enforcement, show/hide password toggle, and clean UI with success redirect.',
+      image: formValidationScreenshot,
+      technologies: ['HTML5', 'CSS3', 'JavaScript', 'DOM Manipulation', 'Form Validation'],
       category: 'frontend',
-      githubUrl: 'https://github.com/arnavsinghrawat',
-      liveUrl: 'https://todo-app-demo.netlify.app',
+      githubUrl: 'https://github.com/ArnavSinghRawat18/Form-validation-using-regax',
+      liveUrl: 'https://formvalidationarnav.netlify.app/',
       featured: false
     },
     {
       id: 5,
-      title: 'Restaurant Website',
-      description: 'A modern restaurant website with menu display, online reservation system, and responsive design.',
-      image: '/api/placeholder/400/250',
-      technologies: ['HTML5', 'CSS3', 'JavaScript', 'Bootstrap'],
+      title: 'Responsive News Website',
+      description: 'A fully responsive news website built with HTML and CSS, featuring sleek design and seamless user experience. Demonstrates advanced CSS layout techniques, responsive design principles, and modern web design aesthetics for optimal content presentation.',
+      image: newsWebsiteScreenshot,
+      technologies: ['HTML5', 'CSS3', 'Responsive Design', 'CSS Grid', 'Flexbox'],
       category: 'frontend',
-      githubUrl: 'https://github.com/arnavsinghrawat',
-      liveUrl: 'https://restaurant-demo.netlify.app',
-      featured: false
-    },
-    {
-      id: 6,
-      title: 'Landing Page Collection',
-      description: 'A collection of responsive landing pages for various business types with modern UI/UX design.',
-      image: '/api/placeholder/400/250',
-      technologies: ['HTML5', 'CSS3', 'JavaScript', 'Tailwind CSS'],
-      category: 'frontend',
-      githubUrl: 'https://github.com/arnavsinghrawat',
-      liveUrl: 'https://landing-pages-demo.netlify.app',
+      githubUrl: 'https://github.com/ARNAVtitan/News_website',
+      liveUrl: 'https://arnavnews.netlify.app/',
       featured: false
     }
   ];
@@ -77,8 +71,9 @@ const Projects = () => {
   const filters = [
     { key: 'all', label: 'All Projects' },
     { key: 'frontend', label: 'Frontend' },
-    { key: 'backend', label: 'Backend' },
-    { key: 'fullstack', label: 'Full Stack' }
+    { key: 'react', label: 'React Apps' },
+    { key: 'interactive', label: 'Interactive' },
+    { key: 'learning', label: 'Learning Projects' }
   ];
 
   const filteredProjects = activeFilter === 'all' 
@@ -95,8 +90,9 @@ const Projects = () => {
           <div className="projects-header">
             <h1 className="heading-1">My <span className="text-gradient">Projects</span></h1>
             <p className="projects-description">
-              Here are some of the projects I've worked on recently. Each project represents 
-              a unique challenge and learning opportunity.
+              Here's a showcase of my frontend development projects. Each project demonstrates my skills in 
+              React.js, JavaScript, and modern web technologies, focusing on clean code, responsive design, 
+              and engaging user experiences.
             </p>
           </div>
 
@@ -131,15 +127,17 @@ const Projects = () => {
                         >
                           <FaGithub />
                         </a>
-                        <a 
-                          href={project.liveUrl} 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className="project-link"
-                          aria-label="View live demo"
-                        >
-                          <FaExternalLinkAlt />
-                        </a>
+                        {project.liveUrl && (
+                          <a 
+                            href={project.liveUrl} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="project-link"
+                            aria-label="View live demo"
+                          >
+                            <FaExternalLinkAlt />
+                          </a>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -207,15 +205,17 @@ const Projects = () => {
                       >
                         <FaGithub />
                       </a>
-                      <a 
-                        href={project.liveUrl} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="project-link"
-                        aria-label="View live demo"
-                      >
-                        <FaExternalLinkAlt />
-                      </a>
+                      {project.liveUrl && (
+                        <a 
+                          href={project.liveUrl} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="project-link"
+                          aria-label="View live demo"
+                        >
+                          <FaExternalLinkAlt />
+                        </a>
+                      )}
                     </div>
                   </div>
                 </div>
