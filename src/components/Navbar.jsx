@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FaBars, FaTimes } from 'react-icons/fa';
+import { FaBars, FaTimes, FaClock, FaCloudSun } from 'react-icons/fa';
 import ThemeToggle from './ThemeToggle';
 import './Navbar.css';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [currentTime, setCurrentTime] = useState(new Date());
+  const [weather, setWeather] = useState(null);
+  const [weatherLocation, setWeatherLocation] = useState('Unknown');
   const location = useLocation();
 
   const navItems = [
@@ -17,6 +20,65 @@ const Navbar = () => {
     { path: '/contact', label: 'Contact' },
     { path: '/resume', label: 'Resume' }
   ];
+
+  // Digital Clock
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  // Weather API
+  const fetchWeatherByLocation = async (latitude, longitude) => {
+    try {
+      const weatherResponse = await fetch(
+        `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&temperature_unit=celsius`
+      );
+      const weatherData = await weatherResponse.json();
+      setWeather(weatherData.current_weather);
+
+      try {
+        const locationResponse = await fetch(
+          `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
+        );
+        const locationData = await locationResponse.json();
+        const city = locationData.city || locationData.locality || 'Unknown City';
+        setWeatherLocation(city);
+      } catch (locationErr) {
+        console.error('Location name fetch failed:', locationErr);
+        setWeatherLocation('Unknown');
+      }
+    } catch (error) {
+      console.error('Weather fetch failed:', error);
+    }
+  };
+
+  const fetchWeatherWithPermission = useCallback(() => {
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          fetchWeatherByLocation(latitude, longitude);
+        },
+        (error) => {
+          console.error('Geolocation error:', error);
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 300000
+        }
+      );
+    }
+  }, []);
+
+  useEffect(() => {
+    const savedPermission = localStorage.getItem('weatherPermission');
+    if (savedPermission === 'granted') {
+      fetchWeatherWithPermission();
+    }
+  }, [fetchWeatherWithPermission]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -36,13 +98,36 @@ const Navbar = () => {
     setIsOpen(!isOpen);
   };
 
+  const formatTime = (date) => {
+    return date.toLocaleTimeString('en-US', {
+      hour12: true,
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
+
   return (
     <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <div className="container">
         <div className="navbar-content">
           <Link to="/" className="navbar-brand">
-            <span className="brand-text text-gradient">Arnav</span>
+            <span className="brand-text text-gradient animate-name">Arnav</span>
           </Link>
+
+          {/* Time and Weather Info */}
+          <div className="navbar-info">
+            <div className="navbar-time">
+              <FaClock />
+              <span>{formatTime(currentTime)}</span>
+            </div>
+            {weather && (
+              <div className="navbar-weather">
+                <FaCloudSun />
+                <span>{Math.round(weather.temperature)}°C</span>
+                <span className="weather-location">{weatherLocation}</span>
+              </div>
+            )}
+          </div>
 
           <div className="navbar-right">
             <ul className={`navbar-nav ${isOpen ? 'open' : ''}`}>

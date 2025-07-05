@@ -6,6 +6,7 @@ import './App.css';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
+import DailyInspiration from './components/DailyInspiration';
 
 // Pages
 import Home from './pages/Home';
@@ -34,6 +35,7 @@ function App() {
         </main>
         <Footer />
         <ScrollToTop />
+        <DailyInspiration />
       </div>
     </Router>
   );

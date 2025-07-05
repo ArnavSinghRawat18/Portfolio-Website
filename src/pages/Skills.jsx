@@ -137,25 +137,29 @@ const Skills = () => {
             <div className="learning-content">
               <h2 className="heading-2">Currently <span className="text-gradient">Learning</span></h2>
               <p>
-                As a Computer Science student, I'm passionate about continuous learning and staying up-to-date with the latest frontend technologies. 
-                Currently, I'm focusing on:
+                As a Computer Science student, I'm passionate about continuous learning and expanding my skillset. 
+                Currently, I'm focusing on backend technologies to become a full-stack MERN developer:
               </p>
               <div className="learning-list">
                 <div className="learning-item">
-                  <span className="learning-bullet">⚛️</span>
-                  <span>Advanced React Concepts & State Management</span>
+                  <span className="learning-bullet">🗄️</span>
+                  <span>MongoDB - NoSQL Database Management</span>
                 </div>
                 <div className="learning-item">
-                  <span className="learning-bullet">🎨</span>
-                  <span>Modern CSS Frameworks & Animation Libraries</span>
+                  <span className="learning-bullet">⚙️</span>
+                  <span>Express.js - Backend Framework for Node.js</span>
                 </div>
                 <div className="learning-item">
-                  <span className="learning-bullet">📱</span>
-                  <span>Responsive Design & Mobile-First Development</span>
+                  <span className="learning-bullet">�</span>
+                  <span>Node.js - Server-side JavaScript Runtime</span>
+                </div>
+                <div className="learning-item">
+                  <span className="learning-bullet">�</span>
+                  <span>REST APIs & Backend Architecture</span>
                 </div>
                 <div className="learning-item">
                   <span className="learning-bullet">🚀</span>
-                  <span>Performance Optimization & Best Practices</span>
+                  <span>Full-Stack MERN Development</span>
                 </div>
               </div>
             </div>

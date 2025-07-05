@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FaGithub, FaLinkedin, FaTwitter, FaInstagram, FaWhatsapp, FaArrowDown } from 'react-icons/fa';
 import './Home.css';
@@ -6,136 +6,10 @@ import './Home.css';
 const roles = ['Front-End Developer', 'React Developer', 'JavaScript Expert', 'UI/UX Enthusiast'];
 
 const Home = () => {
-  const [currentTime, setCurrentTime] = useState(new Date());
-  const [weather, setWeather] = useState(null);
-  const [weatherLocation, setWeatherLocation] = useState('Unknown Location');
-  const [locationError, setLocationError] = useState(null);
-  const [showLocationAlert, setShowLocationAlert] = useState(false);
-  const [weatherPermissionGranted, setWeatherPermissionGranted] = useState(false);
-  const [weatherPermissionDenied, setWeatherPermissionDenied] = useState(false);
-  const [quote, setQuote] = useState(null);
   const [typewriterText, setTypewriterText] = useState('');
-  
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
-
-  // Digital Clock
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentTime(new Date());
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
-
-  // Function to fetch weather by coordinates
-  const fetchWeatherByLocation = async (latitude, longitude) => {
-    try {
-      // Fetch weather data
-      const weatherResponse = await fetch(
-        `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&temperature_unit=celsius`
-      );
-      const weatherData = await weatherResponse.json();
-      setWeather(weatherData.current_weather);
-
-      // Fetch location name using reverse geocoding
-      try {
-        const locationResponse = await fetch(
-          `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
-        );
-        const locationData = await locationResponse.json();
-        const city = locationData.city || locationData.locality || 'Unknown City';
-        const country = locationData.countryName || 'Unknown Country';
-        setWeatherLocation(`${city}, ${country}`);
-      } catch (locationErr) {
-        console.error('Location name fetch failed:', locationErr);
-        setWeatherLocation(`${latitude.toFixed(2)}, ${longitude.toFixed(2)}`);
-      }
-    } catch (error) {
-      console.error('Weather fetch failed:', error);
-      setLocationError('Unable to fetch weather data');
-    }
-  };
-
-  const fetchWeatherWithPermission = useCallback(() => {
-    if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          fetchWeatherByLocation(latitude, longitude);
-        },
-        (error) => {
-          console.error('Geolocation error:', error);
-          setLocationError('Unable to get your location');
-        },
-        {
-          enableHighAccuracy: true,
-          timeout: 10000,
-          maximumAge: 300000 // Cache for 5 minutes
-        }
-      );
-    } else {
-      setLocationError('Geolocation not supported by your browser');
-    }
-  }, []);
-
-  // Weather API with User Location
-  useEffect(() => {
-    // Check if user previously granted or denied permission
-    const savedPermission = localStorage.getItem('weatherPermission');
-    if (savedPermission === 'granted') {
-      setWeatherPermissionGranted(true);
-      fetchWeatherWithPermission();
-    } else if (savedPermission === 'denied') {
-      setWeatherPermissionDenied(true);
-    } else {
-      // Show alert to ask for permission
-      setShowLocationAlert(true);
-    }
-  }, [fetchWeatherWithPermission]);
-
-  // Function to handle location permission request
-  const handleAllowLocation = () => {
-    setShowLocationAlert(false);
-    setWeatherPermissionGranted(true);
-    setWeatherPermissionDenied(false);
-    localStorage.setItem('weatherPermission', 'granted');
-    fetchWeatherWithPermission();
-  };
-
-  const handleDenyLocation = () => {
-    setShowLocationAlert(false);
-    setWeatherPermissionDenied(true);
-    setWeatherPermissionGranted(false);
-    localStorage.setItem('weatherPermission', 'denied');
-  };
-
-  const handleEnableWeather = () => {
-    setWeatherPermissionDenied(false);
-    setWeatherPermissionGranted(true);
-    localStorage.setItem('weatherPermission', 'granted');
-    fetchWeatherWithPermission();
-  };
-
-  // Quote API
-  useEffect(() => {
-    const fetchQuote = async () => {
-      try {
-        const response = await fetch('https://zenquotes.io/api/random');
-        const data = await response.json();
-        setQuote(data[0]);
-      } catch (error) {
-        console.error('Quote fetch failed:', error);
-        // Fallback quote
-        setQuote({
-          q: 'The best way to predict the future is to create it.',
-          a: 'Peter Drucker'
-        });
-      }
-    };
-
-    fetchQuote();
-  }, []);
+  const [scrollY, setScrollY] = useState(0);
 
   // Typewriter Effect
   useEffect(() => {
@@ -156,23 +30,39 @@ const Home = () => {
     return () => clearTimeout(timeout);
   }, [typewriterText, isDeleting, currentRoleIndex]);
 
-  const formatTime = (date) => {
-    return date.toLocaleTimeString('en-US', {
-      hour12: true,
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit'
-    });
-  };
+  // Scroll tracking for parallax effects
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
 
-  const formatDate = (date) => {
-    return date.toLocaleDateString('en-US', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Intersection Observer for scroll animations
+  useEffect(() => {
+    const observerCallback = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-in');
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px'
     });
-  };
+
+    // Observe all animated elements
+    const animatedElements = document.querySelectorAll('.scroll-animate');
+    animatedElements.forEach((el) => observer.observe(el));
+
+    return () => {
+      animatedElements.forEach((el) => observer.unobserve(el));
+    };
+  }, []);
 
   const socialLinks = [
     { icon: <FaGithub />, url: 'https://github.com/ArnavSinghRawat18', label: 'GitHub' },
@@ -184,74 +74,72 @@ const Home = () => {
 
   return (
     <div className="home">
-      {/* Animated Background */}
+      {/* Animated Background with Parallax */}
       <div className="animated-background">
-        <div className="floating-shape shape-1"></div>
-        <div className="floating-shape shape-2"></div>
-        <div className="floating-shape shape-3"></div>
-        <div className="floating-shape shape-4"></div>
-        <div className="gradient-orb orb-1"></div>
-        <div className="gradient-orb orb-2"></div>
+        <div 
+          className="floating-shape shape-1"
+          style={{ transform: `translateY(${scrollY * 0.1}px)` }}
+        ></div>
+        <div 
+          className="floating-shape shape-2"
+          style={{ transform: `translateY(${scrollY * -0.15}px)` }}
+        ></div>
+        <div 
+          className="floating-shape shape-3"
+          style={{ transform: `translateY(${scrollY * 0.08}px)` }}
+        ></div>
+        <div 
+          className="floating-shape shape-4"
+          style={{ transform: `translateY(${scrollY * -0.12}px)` }}
+        ></div>
+        <div 
+          className="gradient-orb orb-1"
+          style={{ transform: `translateY(${scrollY * 0.05}px)` }}
+        ></div>
+        <div 
+          className="gradient-orb orb-2"
+          style={{ transform: `translateY(${scrollY * -0.08}px)` }}
+        ></div>
       </div>
-
-      {/* Location Permission Alert */}
-      {showLocationAlert && (
-        <div className="location-alert">
-          <div className="location-alert-content">
-            <div className="alert-icon">📍</div>
-            <div className="alert-text">
-              <h3>Enable Location Access</h3>
-              <p>To use full features of the website including live weather updates, please allow location access.</p>
-            </div>
-            <div className="alert-actions">
-              <button className="btn btn-primary btn-small" onClick={handleAllowLocation}>
-                Allow Location
-              </button>
-              <button className="btn btn-secondary btn-small" onClick={handleDenyLocation}>
-                Maybe Later
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
 
       <div className="container">
         <div className="home-content">
           {/* Main Hero Section */}
           <div className="hero-section">
             <div className="hero-text">
-              <h1 className="hero-name">
-                Hi, I'm <span className="text-gradient">Arnav Singh Rawat</span>
+              <h1 className="hero-name scroll-animate">
+                Hi, I'm <span className="text-gradient animate-text enhanced-name-animation">Arnav Singh Rawat</span>
               </h1>
-              <div className="hero-role">
+              <div className="hero-role scroll-animate">
                 <span className="role-text">
                   {typewriterText}
                   <span className="cursor">|</span>
                 </span>
               </div>
-              <p className="hero-description">
+              <p className="hero-description scroll-animate">
                 Computer Science student passionate about Front-End Development with React, JavaScript, and modern web technologies.
                 Enthusiastic about learning, creating responsive user interfaces, and building innovative projects.
               </p>
               
-              <div className="hero-actions">
-                <Link to="/projects" className="btn btn-primary">
+              <div className="hero-actions scroll-animate">
+                <Link to="/projects" className="btn btn-primary magic-hover">
                   View My Work
                 </Link>
-                <Link to="/contact" className="btn btn-secondary">
+                <Link to="/contact" className="btn btn-secondary magic-hover">
                   Get In Touch
                 </Link>
               </div>
 
-              <div className="social-links">
+              <div className="social-links scroll-animate">
                 {socialLinks.map((link, index) => (
                   <a
                     key={index}
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="social-link"
+                    className="social-link bounce-hover"
                     aria-label={link.label}
+                    style={{ animationDelay: `${index * 0.1}s` }}
                   >
                     {link.icon}
                   </a>
@@ -259,77 +147,110 @@ const Home = () => {
               </div>
             </div>
 
-            <div className="hero-info">
-              {/* Digital Clock */}
-              <div className="info-card clock-card">
-                <h3>Current Time</h3>
-                <div className="clock">
-                  <div className="time">{formatTime(currentTime)}</div>
-                  <div className="date">{formatDate(currentTime)}</div>
-                </div>
-              </div>
-
-              {/* Weather */}
-              {weatherPermissionGranted ? (
-                <div className="info-card weather-card">
-                  <h3>Current Weather</h3>
-                  {weather ? (
-                    <div className="weather">
-                      <div className="weather-location">{weatherLocation}</div>
-                      <div className="temperature">{Math.round(weather.temperature)}°C</div>
-                      <div className="weather-desc">
-                        Wind: {weather.windspeed} km/h
+            {/* Animated Coding Illustration */}
+            <div className="hero-illustration scroll-animate">
+              <div className="coding-workspace">
+                {/* Laptop */}
+                <div className="laptop">
+                  <div className="laptop-screen">
+                    <div className="screen-content">
+                      <div className="code-editor">
+                        <div className="editor-header">
+                          <div className="window-controls">
+                            <span className="control close"></span>
+                            <span className="control minimize"></span>
+                            <span className="control maximize"></span>
+                          </div>
+                          <div className="file-name">App.jsx</div>
+                        </div>
+                        <div className="code-area">
+                          <div className="code-line">
+                            <span className="line-number">1</span>
+                            <span className="code-text">
+                              <span className="keyword">import</span> <span className="variable">React</span> <span className="keyword">from</span> <span className="string">'react'</span>
+                            </span>
+                          </div>
+                          <div className="code-line">
+                            <span className="line-number">2</span>
+                            <span className="code-text">
+                              <span className="keyword">import</span> <span className="string">'./App.css'</span>
+                            </span>
+                          </div>
+                          <div className="code-line">
+                            <span className="line-number">3</span>
+                            <span className="code-text"></span>
+                          </div>
+                          <div className="code-line">
+                            <span className="line-number">4</span>
+                            <span className="code-text">
+                              <span className="keyword">function</span> <span className="function">App</span>() &#123;
+                            </span>
+                          </div>
+                          <div className="code-line">
+                            <span className="line-number">5</span>
+                            <span className="code-text">
+                              &nbsp;&nbsp;<span className="keyword">return</span> (
+                            </span>
+                          </div>
+                          <div className="code-line">
+                            <span className="line-number">6</span>
+                            <span className="code-text">
+                              &nbsp;&nbsp;&nbsp;&nbsp;<span className="tag">&lt;div</span> <span className="attribute">className</span>=<span className="string">"App"</span><span className="tag">&gt;</span>
+                            </span>
+                          </div>
+                          <div className="code-line typing-animation">
+                            <span className="line-number">7</span>
+                            <span className="code-text">
+                              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span className="tag">&lt;h1&gt;</span><span className="typing-cursor">|</span>
+                            </span>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  ) : locationError ? (
-                    <div className="weather-error">
-                      <div className="error-text">{locationError}</div>
-                      <button 
-                        className="retry-location-btn"
-                        onClick={fetchWeatherWithPermission}
-                        aria-label="Retry location access"
-                      >
-                        Try Again
-                      </button>
-                    </div>
-                  ) : (
-                    <div className="weather-loading">
-                      <div className="loading"></div>
-                      <div className="loading-text">Getting your location...</div>
-                    </div>
-                  )}
-                </div>
-              ) : weatherPermissionDenied ? (
-                <div className="info-card weather-card weather-disabled">
-                  <h3>Weather</h3>
-                  <div className="weather-permission-message">
-                    <p>Weather is disabled</p>
-                    <button 
-                      className="btn btn-primary btn-small"
-                      onClick={handleEnableWeather}
-                    >
-                      Enable Weather
-                    </button>
                   </div>
+                  <div className="laptop-base"></div>
                 </div>
-              ) : null}
 
-              {/* Quote */}
-              {quote && (
-                <div className="info-card quote-card">
-                  <h3>Daily Inspiration</h3>
-                  <div className="quote">
-                    <p>"{quote.q}"</p>
-                    <span className="author">- {quote.a}</span>
+                {/* Floating Code Elements */}
+                <div className="floating-code-elements">
+                  <div className="code-bubble bubble-1">
+                    <span>&lt;React /&gt;</span>
+                  </div>
+                  <div className="code-bubble bubble-2">
+                    <span>{ }</span>
+                  </div>
+                  <div className="code-bubble bubble-3">
+                    <span>CSS3</span>
+                  </div>
+                  <div className="code-bubble bubble-4">
+                    <span>JS</span>
                   </div>
                 </div>
-              )}
+
+                {/* Coffee Cup */}
+                <div className="coffee-cup">
+                  <div className="cup-body">
+                    <div className="coffee-liquid"></div>
+                    <div className="coffee-steam">
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                    </div>
+                  </div>
+                  <div className="cup-handle"></div>
+                </div>
+
+                {/* Mouse */}
+                <div className="computer-mouse">
+                  <div className="mouse-click-effect"></div>
+                </div>
+              </div>
             </div>
           </div>
 
           {/* Explore More Button */}
-          <div className="explore-section">
-            <Link to="/about" className="explore-btn">
+          <div className="explore-section scroll-animate">
+            <Link to="/about" className="explore-btn pulse-animation">
               <span>Explore More</span>
               <FaArrowDown className="arrow-icon" />
             </Link>
