@@ -259,7 +259,7 @@ const Home = () => {
               </div>
             </div>
 
-            <div className="hero-info">
+            <div className="hero-info desktop-only">
               {/* Digital Clock */}
               <div className="info-card clock-card">
                 <h3>Current Time</h3>
@@ -325,6 +325,74 @@ const Home = () => {
                 </div>
               )}
             </div>
+          </div>
+
+          {/* Mobile Info Cards - Positioned at bottom for mobile */}
+          <div className="mobile-info-cards mobile-only">
+            {/* Digital Clock */}
+            <div className="info-card clock-card">
+              <h3>Current Time</h3>
+              <div className="clock">
+                <div className="time">{formatTime(currentTime)}</div>
+                <div className="date">{formatDate(currentTime)}</div>
+              </div>
+            </div>
+
+            {/* Weather */}
+            {weatherPermissionGranted ? (
+              <div className="info-card weather-card">
+                <h3>Current Weather</h3>
+                {weather ? (
+                  <div className="weather">
+                    <div className="weather-location">{weatherLocation}</div>
+                    <div className="temperature">{Math.round(weather.temperature)}°C</div>
+                    <div className="weather-desc">
+                      Wind: {weather.windspeed} km/h
+                    </div>
+                  </div>
+                ) : locationError ? (
+                  <div className="weather-error">
+                    <div className="error-text">{locationError}</div>
+                    <button 
+                      className="retry-location-btn"
+                      onClick={fetchWeatherWithPermission}
+                      aria-label="Retry location access"
+                    >
+                      Try Again
+                    </button>
+                  </div>
+                ) : (
+                  <div className="weather-loading">
+                    <div className="loading"></div>
+                    <div className="loading-text">Getting your location...</div>
+                  </div>
+                )}
+              </div>
+            ) : weatherPermissionDenied ? (
+              <div className="info-card weather-card weather-disabled">
+                <h3>Weather</h3>
+                <div className="weather-permission-message">
+                  <p>Weather is disabled</p>
+                  <button 
+                    className="btn btn-primary btn-small"
+                    onClick={handleEnableWeather}
+                  >
+                    Enable Weather
+                  </button>
+                </div>
+              </div>
+            ) : null}
+
+            {/* Quote */}
+            {quote && (
+              <div className="info-card quote-card">
+                <h3>Daily Inspiration</h3>
+                <div className="quote">
+                  <p>"{quote.q}"</p>
+                  <span className="author">- {quote.a}</span>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Explore More Button */}
