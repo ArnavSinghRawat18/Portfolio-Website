@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { FaGithub, FaLinkedin, FaTwitter, FaInstagram, FaWhatsapp, FaArrowDown } from 'react-icons/fa';
 import './Home.css';
+
+const roles = ['Front-End Developer', 'React Developer', 'JavaScript Expert', 'UI/UX Enthusiast'];
 
 const Home = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -14,7 +16,6 @@ const Home = () => {
   const [quote, setQuote] = useState(null);
   const [typewriterText, setTypewriterText] = useState('');
   
-  const roles = ['Front-End Developer', 'React Developer', 'JavaScript Expert', 'UI/UX Enthusiast'];
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -56,22 +57,7 @@ const Home = () => {
     }
   };
 
-  // Weather API with User Location
-  useEffect(() => {
-    // Check if user previously granted or denied permission
-    const savedPermission = localStorage.getItem('weatherPermission');
-    if (savedPermission === 'granted') {
-      setWeatherPermissionGranted(true);
-      fetchWeatherWithPermission();
-    } else if (savedPermission === 'denied') {
-      setWeatherPermissionDenied(true);
-    } else {
-      // Show alert to ask for permission
-      setShowLocationAlert(true);
-    }
-  }, []);
-
-  const fetchWeatherWithPermission = () => {
+  const fetchWeatherWithPermission = useCallback(() => {
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -91,7 +77,22 @@ const Home = () => {
     } else {
       setLocationError('Geolocation not supported by your browser');
     }
-  };
+  }, []);
+
+  // Weather API with User Location
+  useEffect(() => {
+    // Check if user previously granted or denied permission
+    const savedPermission = localStorage.getItem('weatherPermission');
+    if (savedPermission === 'granted') {
+      setWeatherPermissionGranted(true);
+      fetchWeatherWithPermission();
+    } else if (savedPermission === 'denied') {
+      setWeatherPermissionDenied(true);
+    } else {
+      // Show alert to ask for permission
+      setShowLocationAlert(true);
+    }
+  }, [fetchWeatherWithPermission]);
 
   // Function to handle location permission request
   const handleAllowLocation = () => {
@@ -153,7 +154,7 @@ const Home = () => {
     }, isDeleting ? 50 : 100);
 
     return () => clearTimeout(timeout);
-  }, [typewriterText, isDeleting, currentRoleIndex, roles]);
+  }, [typewriterText, isDeleting, currentRoleIndex]);
 
   const formatTime = (date) => {
     return date.toLocaleTimeString('en-US', {
