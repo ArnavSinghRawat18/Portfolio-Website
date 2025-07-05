@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { FaGithub, FaLinkedin, FaTwitter, FaInstagram, FaWhatsapp, FaHeart } from 'react-icons/fa';
 import './Footer.css';
 
@@ -47,10 +48,10 @@ const Footer = () => {
           <div className="footer-section">
             <h4 className="footer-heading">Quick Links</h4>
             <ul className="footer-links">
-              <li><a href="/about">About</a></li>
-              <li><a href="/skills">Skills</a></li>
-              <li><a href="/projects">Projects</a></li>
-              <li><a href="/contact">Contact</a></li>
+              <li><Link to="/about">About</Link></li>
+              <li><Link to="/skills">Skills</Link></li>
+              <li><Link to="/projects">Projects</Link></li>
+              <li><Link to="/contact">Contact</Link></li>
             </ul>
           </div>
 

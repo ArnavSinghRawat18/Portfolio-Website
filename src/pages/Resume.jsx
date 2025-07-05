@@ -6,7 +6,7 @@ const Resume = () => {
   const handleDownload = () => {
     // Create a link element and trigger download
     const link = document.createElement('a');
-    link.href = '/resume.pdf'; // PDF should be in public folder
+    link.href = `${process.env.PUBLIC_URL}/resume.pdf`; // PDF should be in public folder
     link.download = 'Arnav_Singh_Rawat_Resume.pdf';
     document.body.appendChild(link);
     link.click();
@@ -157,7 +157,7 @@ const Resume = () => {
                 <FaDownload />
                 Download PDF
               </button>
-              <button className="btn btn-secondary" onClick={() => window.open('/resume.pdf', '_blank')}>
+              <button className="btn btn-secondary" onClick={() => window.open(`${process.env.PUBLIC_URL}/resume.pdf`, '_blank')}>
                 <FaEye />
                 View PDF
               </button>
